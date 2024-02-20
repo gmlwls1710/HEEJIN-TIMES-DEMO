@@ -3,7 +3,7 @@ let news = [];
 
 const getLatestNews = async () => {
   const url = new URL(
-    `https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`
+    `https://creative-clafoutis-810b22.netlify.app/top-headlines?country=us&apiKey=${API_KEY}`
   );
   console.log("uuu", url);
   const response = await fetch(url);
