@@ -23,7 +23,8 @@ const getNewsByCategory = async (event) => {
   const category = event.target.textContent.toLowerCase();
   console.log("category");
   const url = new URL(
-    `https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=${API_KEY}`
+    `https://creative-clafoutis-810b22.netlify.app/top-headlines?country=us&category=${category}&apiKey=${API_KEY}`
+    //`https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=${API_KEY}`
   );
   const response = await fetch(url);
   const data = await response.json();
@@ -69,7 +70,8 @@ const openSearchBox = async () => {
 const searchNews = async () => {
   let inputArea = document.getElementById("input-area").value;
   const url = new URL(
-    `https://newsapi.org/v2/top-headlines?country=us&q=${inputArea}&apiKey=${API_KEY}`
+    `https://creative-clafoutis-810b22.netlify.apptop-headlines?country=us&q=${inputArea}&apiKey=${API_KEY}`
+    //`https://newsapi.org/v2/top-headlines?country=us&q=${inputArea}&apiKey=${API_KEY}`
   );
   const response = await fetch(url);
   const data = await response.json();
