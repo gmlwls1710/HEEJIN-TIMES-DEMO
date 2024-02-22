@@ -70,7 +70,7 @@ const openSearchBox = async () => {
 const searchNews = async () => {
   let inputArea = document.getElementById("search-input").value;
   const url = new URL(
-    `https://creative-clafoutis-810b22.netlify.apptop-headlines?country=us&q=${inputArea}&apiKey=${API_KEY}`
+    `https://creative-clafoutis-810b22.netlify.app/top-headlines?country=us&q=${inputArea}&apiKey=${API_KEY}`
     //`https://newsapi.org/v2/top-headlines?country=us&q=${inputArea}&apiKey=${API_KEY}`
   );
   const response = await fetch(url);
