@@ -5,32 +5,43 @@ console.log("mmm", menus);
 menus.forEach((menu) =>
   menu.addEventListener("click", (event) => getNewsByCategory(event))
 );
+let url = new URL(
+  //`https://creative-clafoutis-810b22.netlify.app/top-headlines?country=us&apiKey=${API_KEY}`
+  `https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`
+);
+const getNews = async () => {
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    if (response.status === 200) {
+      if (data.articles.length === 0) {
+        throw new Error("No result for this search");
+      }
+      newsList = data.articles;
+      render();
+    } else {
+      throw new Error(data.message);
+    }
+  } catch (error) {
+    errorRender(error.message);
+  }
+};
 
 const getLatestNews = async () => {
-  const url = new URL(
-    `https://creative-clafoutis-810b22.netlify.app/top-headlines?country=us&apiKey=${API_KEY}`
-    //`https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`
-  );
-  console.log("uuu", url);
-  const response = await fetch(url);
-  const data = await response.json();
-  newsList = data.articles;
-  render();
-  console.log("rrr", newsList);
+  url = new URL();
+  //`https://creative-clafoutis-810b22.netlify.app/top-headlines?country=us&apiKey=${API_KEY}`
+  `https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`;
+  getNews();
 };
 
 const getNewsByCategory = async (event) => {
   const category = event.target.textContent.toLowerCase();
-  console.log("category");
-  const url = new URL(
-    `https://creative-clafoutis-810b22.netlify.app/top-headlines?country=us&category=${category}&apiKey=${API_KEY}`
-    //`https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=${API_KEY}`
+  console.log("category", category);
+  url = new URL(
+    //`https://creative-clafoutis-810b22.netlify.app/top-headlines?country=us&category=${category}&apiKey=${API_KEY}`
+    `https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=${API_KEY}`
   );
-  const response = await fetch(url);
-  const data = await response.json();
-  console.log("ddd", data);
-  newsList = data.articles;
-  render();
+  getNews();
 };
 
 const render = () => {
@@ -51,6 +62,14 @@ const render = () => {
   document.getElementById("news-board").innerHTML = newsHTML;
 };
 
+const errorRender = (errorMessage) => {
+  const errorHTML = `<div class="alert alert-danger" role="alert">
+    ${errorMessage}
+  </div>`;
+
+  document.getElementById("news-board").innerHTML = errorHTML;
+};
+
 const openNav = () => {
   document.getElementById("mySidenav").style.width = "250px";
 };
@@ -69,15 +88,12 @@ const openSearchBox = async () => {
 
 const searchNews = async () => {
   let inputArea = document.getElementById("search-input").value;
-  const url = new URL(
-    `https://creative-clafoutis-810b22.netlify.app/top-headlines?country=us&q=${inputArea}&apiKey=${API_KEY}`
-    //`https://newsapi.org/v2/top-headlines?country=us&q=${inputArea}&apiKey=${API_KEY}`
+  url = new URL(
+    //`https://creative-clafoutis-810b22.netlify.app/top-headlines?country=us&q=${inputArea}&apiKey=${API_KEY}`
+    `https://newsapi.org/v2/top-headlines?country=us&q=${inputArea}&apiKey=${API_KEY}`
   );
-  const response = await fetch(url);
-  const data = await response.json();
-  console.log("keyword data", data);
-  newsList = data.articles;
-  render();
+
+  getNews();
 };
 
 // 1.버튼들에클릭이벤트주기
