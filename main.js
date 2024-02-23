@@ -28,9 +28,10 @@ const getNews = async () => {
 };
 
 const getLatestNews = async () => {
-  url = new URL();
-  //`https://creative-clafoutis-810b22.netlify.app/top-headlines?country=us&apiKey=${API_KEY}`;
-  `https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`;
+  url = new URL(
+    //`https://creative-clafoutis-810b22.netlify.app/top-headlines?country=us&apiKey=${API_KEY}`;
+    `https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`
+  );
   getNews();
 };
 
