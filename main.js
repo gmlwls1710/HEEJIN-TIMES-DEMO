@@ -70,15 +70,6 @@ const errorRender = (errorMessage) => {
 
   document.getElementById("news-board").innerHTML = errorHTML;
 };
-
-const openNav = () => {
-  document.getElementById("mySidenav").style.width = "250px";
-};
-
-const closeNav = () => {
-  document.getElementById("mySidenav").style.width = "0";
-};
-
 const openSearchBox = async () => {
   if (inputArea.style.display === "inline") {
     inputArea.style.display = "none";
@@ -93,7 +84,6 @@ const searchNews = async () => {
     `https://creative-clafoutis-810b22.netlify.app/top-headlines?country=us&q=${inputArea}&apiKey=${API_KEY}`
     //`https://newsapi.org/v2/top-headlines?country=us&q=${inputArea}&apiKey=${API_KEY}`
   );
-
   getNews();
 };
 
@@ -101,3 +91,11 @@ const searchNews = async () => {
 // 2.카테고리별 뉴스 가져오기
 // 3.그 뉴스를 보여주기(렌더)
 getLatestNews();
+
+const openNav = () => {
+  document.getElementById("mySidenav").style.width = "250px";
+};
+
+const closeNav = () => {
+  document.getElementById("mySidenav").style.width = "0";
+};
