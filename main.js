@@ -6,11 +6,18 @@ menus.forEach((menu) =>
   menu.addEventListener("click", (event) => getNewsByCategory(event))
 );
 let url = new URL(
-  `https://creative-clafoutis-810b22.netlify.app/top-headlines?country=us&apiKey=${API_KEY}`
-  //`https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`
+  //`https://creative-clafoutis-810b22.netlify.app/top-headlines?country=us&apiKey=${API_KEY}`
+  `https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`
 );
+let totalResult = 0;
+let page = 1;
+const pageSize = 10;
+const groupSize = 5;
+
 const getNews = async () => {
   try {
+    url.searchParams.set("page", page); //=> &page=page
+    url.searchParams.set("pageSize", pageSize);
     const response = await fetch(url);
     const data = await response.json();
     if (response.status === 200) {
@@ -18,7 +25,9 @@ const getNews = async () => {
         throw new Error("No result for this search");
       }
       newsList = data.articles;
+      totalResult = data.totalResult;
       render();
+      paginationRender();
     } else {
       throw new Error(data.message);
     }
@@ -29,8 +38,8 @@ const getNews = async () => {
 
 const getLatestNews = async () => {
   url = new URL(
-    `https://creative-clafoutis-810b22.netlify.app/top-headlines?country=us&apiKey=${API_KEY}`
-    //`https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`
+    //`https://creative-clafoutis-810b22.netlify.app/top-headlines?country=us&apiKey=${API_KEY}`
+    `https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`
   );
   getNews();
 };
@@ -39,8 +48,8 @@ const getNewsByCategory = async (event) => {
   const category = event.target.textContent.toLowerCase();
   console.log("category", category);
   url = new URL(
-    `https://creative-clafoutis-810b22.netlify.app/top-headlines?country=us&category=${category}&apiKey=${API_KEY}`
-    //`https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=${API_KEY}`
+    //`https://creative-clafoutis-810b22.netlify.app/top-headlines?country=us&category=${category}&apiKey=${API_KEY}`
+    `https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=${API_KEY}`
   );
   getNews();
 };
@@ -81,8 +90,8 @@ const openSearchBox = async () => {
 const searchNews = async () => {
   let inputArea = document.getElementById("search-input").value;
   url = new URL(
-    `https://creative-clafoutis-810b22.netlify.app/top-headlines?country=us&q=${inputArea}&apiKey=${API_KEY}`
-    //`https://newsapi.org/v2/top-headlines?country=us&q=${inputArea}&apiKey=${API_KEY}`
+    //`https://creative-clafoutis-810b22.netlify.app/top-headlines?country=us&q=${inputArea}&apiKey=${API_KEY}`
+    `https://newsapi.org/v2/top-headlines?country=us&q=${inputArea}&apiKey=${API_KEY}`
   );
   getNews();
 };
@@ -98,4 +107,69 @@ const openNav = () => {
 
 const closeNav = () => {
   document.getElementById("mySidenav").style.width = "0";
+};
+
+const paginationRender = () => {
+  //totalResult
+  //page
+  //pageSize
+  //groupsize
+  //totalPages
+  const totalPages = Math.ceil(totalResult / pageSize);
+  //pagegroup
+  const pageGroup = Math.ceil(page / groupSize);
+  //lastpage
+  const lastPage = pageGroup * groupSize;
+  // 마지막 페이지그룹이 그룹사이즈보다 작다? lastpage = totalpage
+  if (lastPage > totalPages) {
+    lastPage = totalPages;
+  }
+
+  //firstpage
+  const firstPage =
+    lastPage - (groupSize - 1) <= 0 ? 1 : lastPage - (groupSize - 1);
+
+  let paginationHTML = ``;
+  for (let i = firstPage; i <= lastPage; i++) {
+    paginationHTML += `<li class="page-item ${
+      i === page ? "active" : ""
+    }" onclick="moveToPage(${i})"> <a class="page-link" href='#js-bottom' onclick="pageClick(${i})" >${i}</a></li>`;
+  }
+
+  document.querySelector(".pagination").innerHTML = paginationHTML;
+  // <nav aria-label="Page navigation example">
+  //   <ul class="pagination">
+  //     <li class="page-item">
+  //       <a class="page-link" href="#">
+  //         Previous
+  //       </a>
+  //     </li>
+  //     <li class="page-item">
+  //       <a class="page-link" href="#">
+  //         1
+  //       </a>
+  //     </li>
+  //     <li class="page-item">
+  //       <a class="page-link" href="#">
+  //         2
+  //       </a>
+  //     </li>
+  //     <li class="page-item">
+  //       <a class="page-link" href="#">
+  //         3
+  //       </a>
+  //     </li>
+  //     <li class="page-item">
+  //       <a class="page-link" href="#">
+  //         Next
+  //       </a>
+  //     </li>
+  //   </ul>
+  // </nav>;
+};
+
+const moveToPage = (pageNum) => {
+  console.log("movepage", pageNum);
+  page = pageNum;
+  getNews();
 };
