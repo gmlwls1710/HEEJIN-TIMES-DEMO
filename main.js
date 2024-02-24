@@ -6,8 +6,8 @@ menus.forEach((menu) =>
   menu.addEventListener("click", (event) => getNewsByCategory(event))
 );
 let url = new URL(
-  //`https://creative-clafoutis-810b22.netlify.app/top-headlines?country=us&apiKey=${API_KEY}`
-  `https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`
+  `https://creative-clafoutis-810b22.netlify.app/top-headlines?country=us&apiKey=${API_KEY}`
+  //`https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`
 );
 let totalResult = 0;
 let page = 1;
@@ -38,8 +38,8 @@ const getNews = async () => {
 
 const getLatestNews = async () => {
   url = new URL(
-    //`https://creative-clafoutis-810b22.netlify.app/top-headlines?country=us&apiKey=${API_KEY}`
-    `https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`
+    `https://creative-clafoutis-810b22.netlify.app/top-headlines?country=us&apiKey=${API_KEY}`
+    //`https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`
   );
   getNews();
 };
@@ -48,8 +48,8 @@ const getNewsByCategory = async (event) => {
   const category = event.target.textContent.toLowerCase();
   console.log("category", category);
   url = new URL(
-    //`https://creative-clafoutis-810b22.netlify.app/top-headlines?country=us&category=${category}&apiKey=${API_KEY}`
-    `https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=${API_KEY}`
+    `https://creative-clafoutis-810b22.netlify.app/top-headlines?country=us&category=${category}&apiKey=${API_KEY}`
+    //`https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=${API_KEY}`
   );
   getNews();
 };
@@ -90,8 +90,8 @@ const openSearchBox = async () => {
 const searchNews = async () => {
   let inputArea = document.getElementById("search-input").value;
   url = new URL(
-    //`https://creative-clafoutis-810b22.netlify.app/top-headlines?country=us&q=${inputArea}&apiKey=${API_KEY}`
-    `https://newsapi.org/v2/top-headlines?country=us&q=${inputArea}&apiKey=${API_KEY}`
+    `https://creative-clafoutis-810b22.netlify.app/top-headlines?country=us&q=${inputArea}&apiKey=${API_KEY}`
+    //`https://newsapi.org/v2/top-headlines?country=us&q=${inputArea}&apiKey=${API_KEY}`
   );
   getNews();
 };
